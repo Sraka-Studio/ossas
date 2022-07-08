@@ -1,0 +1,32 @@
+{
+	"songs": [
+		[
+			"ossas-funk",
+			"ossas",
+			[
+				75,
+				57,
+				47
+			]
+		]
+	],
+	"hiddenUntilUnlocked": false,
+	"hideFreeplay": false,
+	"weekBackground": "ossas",
+	"difficulties": "hard",
+	"weekCharacters": [
+		"",
+		"",
+		""
+	],
+	"storyName": "Uvuvwevwevwe Onyetenyevwe Ugwemuhwem Osas",
+	"weekName": "Uvuvwevwevwe Onyetenyevwe Ugwemuhwem Osas",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"hideStoryMode": false,
+	"weekBefore": "tutorial",
+	"startUnlocked": true
+}
