@@ -85,7 +85,7 @@ class CreditsState extends MusicBeatState
 			['Gidk',		'gidk',		'owner and coder',								'',	'F8F8F8'],
 			['Bonky',			'bonky',			'music and chart',							'',		'FFD8B2'],
 			['Wipek',				'wipek',			'artist and sprite maker',						'',			'9966CC'],
-			['Atesz',			'atesz',				'chromatic scale',								'',			'55FF00'],
+			['Atesz',			'atesz',				'chromatic scale',								'',			'35B100'],
 			[''],
 			['Psych Engine Team'],
 			['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',								'https://twitter.com/Shadow_Mario_',	'444444'],
