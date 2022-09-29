@@ -32,8 +32,6 @@ function onDestroy()
 end
 
 function onCreatePost()
-    setProperty('gf.visible', false)
-
 	noteTweenX('byezordarrows1', 0, -200, 0.01, 'linear')
     noteTweenX('byezordarrows2', 1, -200, 0.01, 'linear')
     noteTweenX('byezordarrows3', 2, -200, 0.01, 'linear')
