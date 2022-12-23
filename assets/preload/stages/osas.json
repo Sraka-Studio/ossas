@@ -4,7 +4,7 @@
 	"isPixelStage": false,
 
 	"boyfriend": [1370, 300],
-	"girlfriend": [400, 330],
+	"girlfriend": [-150, 330],
 	"opponent": [600, 300],
 	"hide_girlfriend": false,
 

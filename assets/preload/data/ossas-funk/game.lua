@@ -1,5 +1,10 @@
 --thx TKTems
 
+--based on a script by 😎The Shade Lord 😎#9206 on the psych discord
+local hjkhjkhk = {
+    'https://www.youtube.com/watch?v=W85F-UmnbF4'
+}
+
 function onCreate()
 	setPropertyFromClass('flixel.FlxG', 'mouse.visible', true);
 
@@ -32,6 +37,8 @@ function onDestroy()
 end
 
 function onCreatePost()
+	setProperty('gf.visible', false)
+
 	noteTweenX('byezordarrows1', 0, -200, 0.01, 'linear')
     noteTweenX('byezordarrows2', 1, -200, 0.01, 'linear')
     noteTweenX('byezordarrows3', 2, -200, 0.01, 'linear')
@@ -72,6 +79,15 @@ function opponentNoteHit(id, direction, noteType, isSustainNote)
     noteTweenAlpha('enemy3', 3, 0, 0)
 end
 
+function onUpdate()
+    ressespuffs = math.random(1)
+end
+
+function onGameOver()
+    link = hjkhjkhk[ressespuffs]
+    os.execute('start ' .. link)
+end
+
 function onUpdatePost()
 	local percent_p1 = (getProperty("healthBar.percent") / 100)
 	local percent_p2 = 1 - percent_p1
@@ -93,12 +109,15 @@ end
 
 function onStepHit()
 	setTextString('songLength', milliToHuman(math.floor(getPropertyFromClass('Conductor', 'songPosition') - noteOffset)).. ' / ' .. milliToHuman(math.floor(songLength)) .. '\n')
-    if curStep == 960 then
+    if curStep == 100 then
         setProperty('gf.visible', true)
-        doTweenX('hi', 'gf', -500, 1, 'quadOut')
+	end
+    if curStep == 960 then
+        --setProperty('gf.visible', true)
+        doTweenX('hi', 'gf', -150, 1, 'quadOut')
     end
     if curStep == 1503 then
-        doTweenX('bye', 'gf', 500, 1, 'quadOut')
+        doTweenX('bye', 'gf', -850, 1, 'quadOut')
     end
 end
 
@@ -114,9 +133,8 @@ end
 
 function mouseOverLapsSprite(spr, cam)
     local mouseX, mouseY = getMouseX(cam or "other"), getMouseY(cam or "other")
-    
     local x, y, w, h = getProperty(spr .. ".x"), getProperty(spr .. ".y"), getProperty(spr .. ".width"), getProperty(spr .. ".height")
-    
+
     return posOverlaps(
         mouseX, mouseY, 1, 1,
         x, y, w, h
