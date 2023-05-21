@@ -19,6 +19,6 @@ function opponentNoteHit(id, direction, noteType, isSustainNote)
     noteTweenAlpha('enemy3', 3, 0, 0)
 end
 
-function stepHit()
+function onUpdate()
     setTextString('timeTxt', '[ ' .. formatTime(getSongPosition() - noteOffset) .. ' / ' .. formatTime(songLength) .. ' ]')
 end
