@@ -7,6 +7,7 @@ import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxCamera;
+import flixel.util.FlxTimer;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.effects.FlxFlicker;
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -24,7 +25,7 @@ using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-	public static var psychEngineVersion:String = '1.6'; //This is also used for Discord RPC
+	public static var psychEngineVersion:String = '1.7'; //This is also used for Discord RPC
 	public static var curSelected:Int = 0;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
@@ -32,6 +33,7 @@ class MainMenuState extends MusicBeatState
 	
 	var optionShit:Array<String> = [
 		'story_mode',
+		'freeplay',
 		'credits',
 		'options'
 	];
@@ -210,12 +212,24 @@ class MainMenuState extends MusicBeatState
 								switch (daChoice)
 								{
 									case 'story_mode':
-			                            PlayState.SONG = Song.loadFromJson('ossas-funk-hard', 'ossas-funk');
-			                            PlayState.storyDifficulty = 2;
-				                        LoadingState.loadAndSwitchState(new PlayState(), true);
-			                            function endSong():Void
-			                            FlxG.sound.music.onComplete = endSong;
-			                            FlxG.switchState(new PlayState());
+								        PlayState.storyPlaylist = ["ossas-funk"];
+								        PlayState.isStoryMode = true;
+
+								        var diffic = "-hard";
+
+								        PlayState.storyDifficulty = 2;
+
+								        PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + diffic, PlayState.storyPlaylist[0].toLowerCase());
+								        PlayState.campaignScore = 0;
+								        PlayState.campaignMisses = 0;
+
+										new FlxTimer().start(0.3, function(tmr:FlxTimer)
+										{
+											LoadingState.loadAndSwitchState(new PlayState(), true);
+											FreeplayState.destroyFreeplayVocals();
+										});
+									case 'freeplay':
+										MusicBeatState.switchState(new FreeplayState());
 									case 'credits':
 										MusicBeatState.switchState(new CreditsState());
 									case 'options':

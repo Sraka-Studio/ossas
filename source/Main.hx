@@ -1,5 +1,6 @@
 package;
 
+import cpp.CPPInterface;
 import flixel.graphics.FlxGraphic;
 import flixel.FlxG;
 import flixel.FlxGame;
@@ -98,7 +99,18 @@ class Main extends Sprite
 		FlxG.autoPause = false;
 		FlxG.mouse.visible = false;
 		#end
-		
+
+		#if cpp
+		CPPInterface.darkMode();
+		lime.app.Application.current.window.borderless = true;
+		lime.app.Application.current.window.borderless = false;
+		#end
+
+		#if cpp
+		cpp.NativeGc.enable(true);
+		cpp.NativeGc.run(true);
+		#end
+
 		#if CRASH_HANDLER
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
 		#end

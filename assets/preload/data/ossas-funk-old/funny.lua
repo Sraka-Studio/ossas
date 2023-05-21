@@ -1,8 +1,11 @@
 function onCreatePost()
+    setProperty('gf.visible', false)
+
 	noteTweenX('byezordarrows1', 0, -200, 0.01, 'linear')
     noteTweenX('byezordarrows2', 1, -200, 0.01, 'linear')
     noteTweenX('byezordarrows3', 2, -200, 0.01, 'linear')
     noteTweenX('byezordarrows4', 3, -200, 0.01, 'linear')
+
 	noteTweenX('middletime1', 4, 414, 0.01, 'linear')
     noteTweenX('middletime2', 5, 527, 0.01, 'linear')
     noteTweenX('middletime3', 6, 637, 0.01, 'linear')
@@ -16,6 +19,7 @@ function opponentNoteHit(id, direction, noteType, isSustainNote)
     noteTweenAlpha('enemy3', 3, 0, 0)
 end
 
-function onCreatePost()
-    setProperty('gf.visible', false)
+function formatTime(millisecond)
+    local seconds = math.floor(millisecond / 1000)
+    return string.format("%01d:%02d", (seconds / 60) % 60, seconds % 60)  
 end
