@@ -136,6 +136,8 @@ class PlayState extends MusicBeatState
 
 	public var vocals:FlxSound;
 
+    public var gfCamera:Bool = true;
+
 	public var dad:Character = null;
 	public var gf:Character = null;
 	public var boyfriend:Boyfriend = null;
@@ -3640,6 +3642,15 @@ class PlayState extends MusicBeatState
 					});
 				}
 
+			case 'Gf Camera':
+				var val1:Int = Std.parseInt(value1);
+				if(Math.isNaN(val1)) val1 = 0;
+
+				switch(val1) {
+					case 0: gfCamera = true;
+					case 1: gfCamera = false;
+				}
+
 			case 'Set Property':
 				var killMe:Array<String> = value1.split('.');
 				if(killMe.length > 1) {
@@ -3654,7 +3665,7 @@ class PlayState extends MusicBeatState
 	function moveCameraSection():Void {
 		if(SONG.notes[curSection] == null) return;
 
-		if (gf != null && SONG.notes[curSection].gfSection)
+		if (gf != null && SONG.notes[curSection].gfSection && gfCamera)
 		{
 			camFollow.set(gf.getMidpoint().x, gf.getMidpoint().y);
 			camFollow.x += gf.cameraPosition[0] + girlfriendCameraOffset[0];

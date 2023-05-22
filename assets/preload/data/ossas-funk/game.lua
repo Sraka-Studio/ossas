@@ -13,17 +13,17 @@ function onCreate()
 	scaleObject('bar', 0.67, 0.67)
 	addLuaSprite('bar')
 
-	makeLuaText('songLength', '--:-- / --:--', 0, 130, 681.5)
+	makeLuaText('songLength', '--:-- / --:--', 0, 130, 677)
 	setObjectCamera('songLength', 'other')
-	setTextFont('songLength', 'font.ttf')
-	setTextSize('songLength', 26)
+	setTextSize('songLength', 24)
+	setTextFont('songLength', 'yt.otf')
 	addLuaText('songLength', true)
 
-	makeLuaText('foreverScore', 'Score: 0 | Misses: 0 | Accuracy: ?', 1030, 130, 681.5);
+	makeLuaText('foreverScore', 'Score: 0 | Misses: 0 | Accuracy: ?', 1030, 130, 677);
 	setObjectCamera('foreverScore', 'other')
 	setTextAlignment('foreverScore', 'right')
 	setTextSize('foreverScore', 24)
-	setTextFont('foreverScore', 'font.ttf')
+	setTextFont('foreverScore', 'yt.otf')
 	addLuaText('foreverScore', true)
 
 	makeLuaSprite('teehee', 'ui/teehee', 1225, 675)
