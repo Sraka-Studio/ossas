@@ -83,7 +83,7 @@ class CreditsState extends MusicBeatState
 		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
 			['Vs Ossas Team'],
 			['Gidk','gidk','owner and coder','https://www.youtube.com/channel/UCZu360PL3Nr-ppBmmmZhS2w','F8F8F8'],
-			['Bonky','bonky','music and chart','https://www.youtube.com/channel/UCGwMFusR_JC1sX-nM8FyB_A','FFD8B2'],
+			['Bonky','bonky','music and chart','https://www.youtube.com/channel/UCGwMFusR_JC1sX-nM8FyB_A','B816FF'],
 			['Wipek','wipek','artist and animator','https://www.youtube.com/channel/UCgPNGHzDIEVS4w_MrOk1qow','CC66CC'],
 			['Atesz','atesz','chromatic scale','https://www.youtube.com/channel/UCapZphvqpM9-BMgA2FZVeGw/featured','35B100'],
 			[''],
