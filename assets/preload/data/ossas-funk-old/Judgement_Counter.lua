@@ -1,16 +1,16 @@
 function onCreatePost()
 	if getPropertyFromClass('ClientPrefs', 'downScroll') == false then
-		makeLuaText('sicks', 'Sicks: ' .. getProperty('sicks'), 200, 30, 435+75);
-		makeLuaText('goods', 'Goods: ' .. getProperty('goods'), 200, 30, 475+75);
-		makeLuaText('bads', 'Bads: ' .. getProperty('bads'), 200, 30, 515+75);
-		makeLuaText('shits', 'Shits: ' .. getProperty('shits'), 200, 30, 555+75);
-		makeLuaText('Misses', 'Misses: ' .. getProperty('songMisses'), 200, 30, 595+75);
+		makeSexLuaText('sicks', 'Sicks: ' .. getProperty('sicks'), 200, 30, 435+75);
+		makeSexLuaText('goods', 'Goods: ' .. getProperty('goods'), 200, 30, 475+75);
+		makeSexLuaText('bads', 'Bads: ' .. getProperty('bads'), 200, 30, 515+75);
+		makeSexLuaText('shits', 'Shits: ' .. getProperty('shits'), 200, 30, 555+75);
+		makeSexLuaText('Misses', 'Misses: ' .. getProperty('songMisses'), 200, 30, 595+75);
 	elseif getPropertyFromClass('ClientPrefs', 'downScroll') == true then
-		makeLuaText('sicks', 'Sicks: ' .. getProperty('sicks'), 200, 30, 435-410);
-		makeLuaText('goods', 'Goods: ' .. getProperty('goods'), 200, 30, 475-410);
-		makeLuaText('bads', 'Bads: ' .. getProperty('bads'), 200, 30, 515-410);
-		makeLuaText('shits', 'Shits: ' .. getProperty('shits'), 200, 30, 555-410);
-		makeLuaText('Misses', 'Misses: ' .. getProperty('songMisses'), 200, 30, 595-410);
+		makeSexLuaText('sicks', 'Sicks: ' .. getProperty('sicks'), 200, 30, 435-410);
+		makeSexLuaText('goods', 'Goods: ' .. getProperty('goods'), 200, 30, 475-410);
+		makeSexLuaText('bads', 'Bads: ' .. getProperty('bads'), 200, 30, 515-410);
+		makeSexLuaText('shits', 'Shits: ' .. getProperty('shits'), 200, 30, 555-410);
+		makeSexLuaText('Misses', 'Misses: ' .. getProperty('songMisses'), 200, 30, 595-410);
 	end
 
 	setTextSize('sicks', 26)
