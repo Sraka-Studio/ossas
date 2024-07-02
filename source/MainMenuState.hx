@@ -25,7 +25,7 @@ using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-	public static var psychEngineVersion:String = '1.7'; //This is also used for Discord RPC
+	public static var psychEngineVersion:String = '1.5'; //This is also used for Discord RPC
 	public static var curSelected:Int = 0;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
@@ -65,36 +65,31 @@ class MainMenuState extends MusicBeatState
 
 		persistentUpdate = persistentDraw = true;
 
-		var sciana:BGSprite = new BGSprite('menu/niebo', -650, -550);
-		sciana.antialiasing = ClientPrefs.globalAntialiasing;
-		sciana.setGraphicSize(Std.int(sciana.width * 1.2));
-		add(sciana);
+		var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
+		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
+		bg.scrollFactor.set(0, yScroll);
+		bg.setGraphicSize(Std.int(bg.width * 1.175));
+		bg.updateHitbox();
+		bg.screenCenter();
+		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		add(bg);
 
-		var sciana:BGSprite = new BGSprite('menu/dom', 1175, 150);
-		sciana.antialiasing = ClientPrefs.globalAntialiasing;
-		add(sciana);
+		camFollow = new FlxObject(0, 0, 1, 1);
+		camFollowPos = new FlxObject(0, 0, 1, 1);
+		add(camFollow);
+		add(camFollowPos);
 
-		var sciana:BGSprite = new BGSprite('menu/drzewa', 300, -100);
-		sciana.antialiasing = ClientPrefs.globalAntialiasing;
-		add(sciana);
+		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
+		magenta.scrollFactor.set(0, yScroll);
+		magenta.setGraphicSize(Std.int(magenta.width * 1.175));
+		magenta.updateHitbox();
+		magenta.screenCenter();
+		magenta.visible = false;
+		magenta.antialiasing = ClientPrefs.globalAntialiasing;
+		magenta.color = 0xFFfd719b;
+		add(magenta);
 
-		var sciana:BGSprite = new BGSprite('menu/trawa', -450, 250);
-		sciana.antialiasing = ClientPrefs.globalAntialiasing;
-		add(sciana);
-
-		var sciana:BGSprite = new BGSprite('menu/smieci', -250, 350);
-		sciana.antialiasing = ClientPrefs.globalAntialiasing;
-		sciana.setGraphicSize(Std.int(sciana.width * 1.1));
-		add(sciana);
-
-		var weza:FlxSprite = new FlxSprite(500, 10);
-		weza.frames = Paths.getSparrowAtlas('bfu');
-		weza.antialiasing = ClientPrefs.globalAntialiasing;
-		weza.animation.addByPrefix('weza', "i", 24);
-		weza.animation.play('weza');
-		weza.flipX = true;
-		weza.scrollFactor.set(0);
-		add(weza);
+		// magenta.scrollFactor.set();
 
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
@@ -108,14 +103,14 @@ class MainMenuState extends MusicBeatState
 		{
 			var offset:Float = 108 - (Math.max(optionShit.length, 4) - 4) * 80;
 			var menuItem:FlxSprite = new FlxSprite(0, (i * 140)  + offset);
+			menuItem.scale.x = scale;
+			menuItem.scale.y = scale;
 			menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_' + optionShit[i]);
 			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
 			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
 			menuItem.animation.play('idle');
-			menuItem.scale.set(0.8,0.8);
-			menuItem.x += 100;
 			menuItem.ID = i;
-			//menuItem.screenCenter(X);
+			menuItem.screenCenter(X);
 			menuItems.add(menuItem);
 			var scr:Float = (optionShit.length - 4) * 0.135;
 			if(optionShit.length < 6) scr = 0;
@@ -124,6 +119,8 @@ class MainMenuState extends MusicBeatState
 			//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
 			menuItem.updateHitbox();
 		}
+
+		FlxG.camera.follow(camFollowPos, null, 1);
 
 		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "Vs Ossas v" + psychEngineVersion, 12);
 		versionShit.scrollFactor.set();
@@ -152,6 +149,7 @@ class MainMenuState extends MusicBeatState
 		}
 
 		var lerpVal:Float = CoolUtil.boundTo(elapsed * 7.5, 0, 1);
+		camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
 
 		if (!selectedSomethin)
 		{
@@ -190,6 +188,8 @@ class MainMenuState extends MusicBeatState
 				{
 					selectedSomethin = true;
 					FlxG.sound.play(Paths.sound('confirmMenu'));
+
+					if(ClientPrefs.flashing) FlxFlicker.flicker(magenta, 1.1, 0.15, false);
 
 					menuItems.forEach(function(spr:FlxSprite)
 					{
@@ -271,6 +271,7 @@ class MainMenuState extends MusicBeatState
 				if(menuItems.length > 4) {
 					add = menuItems.length * 8;
 				}
+				camFollow.setPosition(spr.getGraphicMidpoint().x, spr.getGraphicMidpoint().y - add);
 				spr.centerOffsets();
 			}
 		});

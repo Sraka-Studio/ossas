@@ -7,7 +7,7 @@ import flixel.FlxSubState;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.input.keyboard.FlxKey;
-import flixel.system.FlxSound;
+import flixel.sound.FlxSound;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -20,8 +20,7 @@ class PauseSubState extends MusicBeatSubstate
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
 	var menuItems:Array<String> = [];
-	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Exit to menu'];
-	var difficultyChoices = [];
+	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Exit to menu'];
 	var curSelected:Int = 0;
 
 	var pauseMusic:FlxSound;
@@ -36,7 +35,6 @@ class PauseSubState extends MusicBeatSubstate
 	public function new(x:Float, y:Float)
 	{
 		super();
-		if(CoolUtil.difficulties.length < 2) menuItemsOG.remove('Change Difficulty'); //No need to change difficulty if there is only one!
 
 		if(PlayState.chartingMode)
 		{
@@ -53,13 +51,6 @@ class PauseSubState extends MusicBeatSubstate
 			menuItemsOG.insert(5 + num, 'Toggle Botplay');
 		}
 		menuItems = menuItemsOG;
-
-		for (i in 0...CoolUtil.difficulties.length) {
-			var diff:String = '' + CoolUtil.difficulties[i];
-			difficultyChoices.push(diff);
-		}
-		difficultyChoices.push('BACK');
-
 
 		pauseMusic = new FlxSound();
 		if(songName != null) {
@@ -85,7 +76,7 @@ class PauseSubState extends MusicBeatSubstate
 		add(levelInfo);
 
 		var levelDifficulty:FlxText = new FlxText(20, 15 + 32, 0, "", 32);
-		levelDifficulty.text += CoolUtil.difficultyString();
+		levelDifficulty.text += "HARD";
 		levelDifficulty.scrollFactor.set();
 		levelDifficulty.setFormat(Paths.font('vcr.ttf'), 32);
 		levelDifficulty.updateHitbox();
@@ -192,32 +183,10 @@ class PauseSubState extends MusicBeatSubstate
 
 		if (accepted && (cantUnpause <= 0 || !ClientPrefs.controllerMode))
 		{
-			if (menuItems == difficultyChoices)
-			{
-				if(menuItems.length - 1 != curSelected && difficultyChoices.contains(daSelected)) {
-					var name:String = PlayState.SONG.song;
-					var poop = Highscore.formatSong(name, curSelected);
-					PlayState.SONG = Song.loadFromJson(poop, name);
-					PlayState.storyDifficulty = curSelected;
-					MusicBeatState.resetState();
-					FlxG.sound.music.volume = 0;
-					PlayState.changedDifficulty = true;
-					PlayState.chartingMode = false;
-					return;
-				}
-
-				menuItems = menuItemsOG;
-				regenMenu();
-			}
-
 			switch (daSelected)
 			{
 				case "Resume":
 					close();
-				case 'Change Difficulty':
-					menuItems = difficultyChoices;
-					deleteSkipTimeText();
-					regenMenu();
 				case 'Toggle Practice Mode':
 					PlayState.instance.practiceMode = !PlayState.instance.practiceMode;
 					PlayState.changedDifficulty = true;
@@ -259,7 +228,7 @@ class PauseSubState extends MusicBeatSubstate
 					if(PlayState.isStoryMode) {
 						MusicBeatState.switchState(new MainMenuState());
 					} else {
-						MusicBeatState.switchState(new MainMenuState());
+						MusicBeatState.switchState(new FreeplayState());
 					}
 					PlayState.cancelMusicFadeTween();
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));

@@ -6,30 +6,43 @@ local hjkhjkhk = {
 }
 
 function onCreate()
-	setPropertyFromClass('flixel.FlxG', 'mouse.visible', true);
+	--setPropertyFromClass('flixel.FlxG', 'mouse.visible', true);
 
 	makeLuaSprite('bar', 'ui/youtubebar', 0, 0)
 	setObjectCamera('bar', 'other')
 	scaleObject('bar', 0.67, 0.67)
 	addLuaSprite('bar')
 
-	makeLuaText('songLength', '--:-- / --:--', 0, 130, 677)
+	makeLuaSprite("sigmaskibidi", "", 0, 658)
+	makeGraphic("sigmaskibidi",	640, 13, '000000')
+	scaleObject('sigmaskibidi', 5, 5)
+	addLuaSprite("sigmaskibidi", true)
+	setObjectCamera("sigmaskibidi", "other")
+    setObjectOrder("sigmaskibidi", 2)
+	setProperty('sigmaskibidi.alpha', 0.6)
+
+	makeSexLuaText('songLength', '', 0, 150, 677)
 	setObjectCamera('songLength', 'other')
 	setTextSize('songLength', 24)
-	setTextFont('songLength', 'yt.otf')
+	--setTextFont('songLength', 'yt.otf')
+	setProperty('songLength.alpha', 0)
 	addLuaText('songLength', true)
 
-	makeLuaText('foreverScore', 'Score: 0 | Misses: 0 | Accuracy: ?', 1030, 130, 677);
+	makeSexLuaText('foreverScore', 'Score: 0 | Misses: 0 | Accuracy: N/A', 1030, 140, 677);
 	setObjectCamera('foreverScore', 'other')
 	setTextAlignment('foreverScore', 'right')
 	setTextSize('foreverScore', 24)
-	setTextFont('foreverScore', 'yt.otf')
+	--setTextFont('foreverScore', 'yt.otf')
 	addLuaText('foreverScore', true)
 
 	makeLuaSprite('teehee', 'ui/teehee', 1225, 675)
 	setObjectCamera('teehee', 'other')
 	scaleObject('teehee', 0.67, 0.67)
-	addLuaSprite('teehee')
+	--addLuaSprite('teehee')
+end
+
+function onSongStart()
+	doTweenAlpha('shit', 'songLength', 1, 1, 'linear')
 end
 
 function onDestroy()
@@ -70,6 +83,10 @@ function onCreatePost()
 	setObjectCamera("healthbar_p2", "other")
 	setObjectOrder("healthbar_p2", 1)
 	setProperty("healthbar_p2" .. ".origin.x", 0)
+
+	setProperty('bar.visible', false)
+	setProperty('healthbar_p1.visible', false)
+	setProperty('healthbar_p2.visible', false)
 end
 
 function opponentNoteHit(id, direction, noteType, isSustainNote)
@@ -95,16 +112,16 @@ function onUpdatePost()
 	setProperty("healthbar_p1" .. ".scale.x", percent_p2 * 2)
 	setProperty("healthbar_p2" .. ".scale.x", (percent_p1 * 2) + (percent_p1 < 1 and 0.01 or 0))
 
-	if mouseClicked('left') and mouseOverLapsSprite('teehee', 'hud') then
-		endSong()
-	end
+	--if mouseClicked('left') and mouseOverLapsSprite('teehee', 'hud') then
+		--endSong()
+	--end
 end
 
 function onRecalculateRating()
-	setTextString('foreverScore',
-	'Score: '..score.. -- setup score
-	' | Misses: '..misses.. -- misses (easy)
-	' | Accuracy: '..round((getProperty('ratingPercent') * 100), 2) ..'%') --setup accuracy
+    setTextString('foreverScore',
+    'Score: '..score.. -- setup score
+    ' | Misses: '..misses.. -- misses (easy)
+    ' | Accuracy: '..round((getProperty('ratingPercent') * 100), 2) ..'%') --setup accuracy
 end
 
 function onStepHit()
