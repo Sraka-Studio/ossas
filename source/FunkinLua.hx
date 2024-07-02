@@ -14,7 +14,7 @@ import flixel.tweens.FlxEase;
 import flixel.text.FlxText;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxPoint;
-import flixel.system.FlxSound;
+import flixel.sound.FlxSound;
 import flixel.util.FlxTimer;
 import flixel.FlxSprite;
 import flixel.FlxCamera;
@@ -1458,13 +1458,13 @@ class FunkinLua {
 
 			var spr:FlxSprite = PlayState.instance.getLuaObject(obj,false);
 			if(spr!=null) {
-				PlayState.instance.getLuaObject(obj,false).makeGraphic(width, height, colorNum);
+				PlayState.instance.getLuaObject(obj,false).makeGraphic(width, height, FlxColor.BLACK);
 				return;
 			}
 
 			var object:FlxSprite = Reflect.getProperty(getInstance(), obj);
 			if(object != null) {
-				object.makeGraphic(width, height, colorNum);
+				object.makeGraphic(width, height, FlxColor.BLACK);
 			}
 		});
 		Lua_helper.add_callback(lua, "addAnimationByPrefix", function(obj:String, name:String, prefix:String, framerate:Int = 24, loop:Bool = true) {
@@ -1917,25 +1917,6 @@ class FunkinLua {
 				}
 			}
 			return false;
-		});
-		Lua_helper.add_callback(lua, "startVideo", function(videoFile:String) {
-			#if VIDEOS_ALLOWED
-			if(FileSystem.exists(Paths.video(videoFile))) {
-				PlayState.instance.startVideo(videoFile);
-				return true;
-			} else {
-				luaTrace('Video file not found: ' + videoFile, false, false, FlxColor.RED);
-			}
-			return false;
-
-			#else
-			if(PlayState.instance.endingSong) {
-				PlayState.instance.endSong();
-			} else {
-				PlayState.instance.startCountdown();
-			}
-			return true;
-			#end
 		});
 
 		Lua_helper.add_callback(lua, "playMusic", function(sound:String, volume:Float = 1, loop:Bool = false) {
